@@ -2,9 +2,8 @@
 
 namespace App\Providers\Filament;
 
-use App\Filament\Pages\Auth\EditProfile;
-use App\Http\Middleware\EnsureAdminRole;
 use App\Http\Middleware\ApplyScholarshipScopes;
+use App\Http\Middleware\EnsureStudentRole;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -22,30 +21,23 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 
-class AdminPanelProvider extends PanelProvider
+class StudentPanelProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel
     {
         return $panel
-            ->default()
-            ->id('admin')
-            ->path('admin')
-            ->login()
-            ->profile(EditProfile::class)
+            ->id('student')
+            ->path('student')
             ->colors([
-                'danger' => Color::Red,
-                'gray' => Color::Zinc,
-                'info' => Color::Blue,
-                'primary' => Color::Blue,
-                'success' => Color::Green,
-                'warning' => Color::Amber
+                'primary' => Color::Green,
+                'gray' => Color::Slate,
             ])
-            ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
-            ->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')
+            ->discoverResources(in: app_path('Filament/Student/Resources'), for: 'App\Filament\Student\Resources')
+            ->discoverPages(in: app_path('Filament/Student/Pages'), for: 'App\Filament\Student\Pages')
             ->pages([
                 Dashboard::class,
             ])
-            ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\Filament\Widgets')
+            ->discoverWidgets(in: app_path('Filament/Student/Widgets'), for: 'App\Filament\Student\Widgets')
             ->widgets([
                 AccountWidget::class,
                 FilamentInfoWidget::class,
@@ -63,13 +55,13 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
-                EnsureAdminRole::class,
+                EnsureStudentRole::class,
                 ApplyScholarshipScopes::class,
             ])
             ->login()
             ->registration(false)
             ->passwordReset()
             ->emailVerification(false)
-            ->brandName('Admin Portal');
+            ->brandName('Student Portal');
     }
 }

@@ -24,23 +24,6 @@ class UserSeeder extends Seeder
             return;
         }
 
-        // SUPER ADMIN - NO SCHOLARSHIP AFFILIATION
-        User::firstOrCreate([
-            'email' => 'superadmin@daanbantayan.gov.ph'
-        ], [
-            'name' => 'Municipal Administrator',
-            'password' => Hash::make('superadmin123'),
-            'role' => 'admin',
-            'scholarship_id' => null, // Super admin is not linked to any specific scholarship
-            'profile_data' => json_encode([
-                'position' => 'Municipal Administrator',
-                'department' => 'Office of the Municipal Mayor',
-                'contact_number' => '+63 999 000 0000',
-                'employee_id' => 'MA-2024-001',
-                'access_level' => 'super_admin'
-            ])
-        ]);
-
         // MERIT SCHOLARSHIP COMMITTEE MEMBERS
         User::firstOrCreate([
             'email' => 'merit.committee.chair@daanbantayan.gov.ph'

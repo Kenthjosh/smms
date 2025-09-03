@@ -2,9 +2,8 @@
 
 namespace App\Providers\Filament;
 
-use App\Filament\Pages\Auth\EditProfile;
-use App\Http\Middleware\EnsureAdminRole;
 use App\Http\Middleware\ApplyScholarshipScopes;
+use App\Http\Middleware\EnsureCommitteeRole;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -22,30 +21,23 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 
-class AdminPanelProvider extends PanelProvider
+class CommitteePanelProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel
     {
         return $panel
-            ->default()
-            ->id('admin')
-            ->path('admin')
-            ->login()
-            ->profile(EditProfile::class)
+            ->id('committee')
+            ->path('committee')
             ->colors([
-                'danger' => Color::Red,
-                'gray' => Color::Zinc,
-                'info' => Color::Blue,
                 'primary' => Color::Blue,
-                'success' => Color::Green,
-                'warning' => Color::Amber
+                'gray' => Color::Slate,
             ])
-            ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
-            ->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')
+            ->discoverResources(in: app_path('Filament/Committee/Resources'), for: 'App\Filament\Committee\Resources')
+            ->discoverPages(in: app_path('Filament/Committee/Pages'), for: 'App\Filament\Committee\Pages')
             ->pages([
                 Dashboard::class,
             ])
-            ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\Filament\Widgets')
+            ->discoverWidgets(in: app_path('Filament/Committee/Widgets'), for: 'App\Filament\Committee\Widgets')
             ->widgets([
                 AccountWidget::class,
                 FilamentInfoWidget::class,
@@ -63,13 +55,13 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
-                EnsureAdminRole::class,
+                EnsureCommitteeRole::class,
                 ApplyScholarshipScopes::class,
             ])
             ->login()
             ->registration(false)
             ->passwordReset()
             ->emailVerification(false)
-            ->brandName('Admin Portal');
+            ->brandName('Committee Portal');
     }
 }
