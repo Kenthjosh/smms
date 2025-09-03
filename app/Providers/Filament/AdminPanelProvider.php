@@ -21,6 +21,7 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use pxlrbt\FilamentSpotlight\SpotlightPlugin;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -34,9 +35,9 @@ class AdminPanelProvider extends PanelProvider
             ->profile(EditProfile::class)
             ->colors([
                 'danger' => Color::Red,
-                'gray' => Color::Zinc,
+                'gray' => Color::Slate,
                 'info' => Color::Blue,
-                'primary' => Color::Blue,
+                'primary' => Color::Orange,
                 'success' => Color::Green,
                 'warning' => Color::Amber
             ])
@@ -66,6 +67,10 @@ class AdminPanelProvider extends PanelProvider
                 EnsureAdminRole::class,
                 ApplyScholarshipScopes::class,
             ])
+            ->plugins([
+                SpotlightPlugin::make(),
+            ])
+            ->viteTheme('resources/css/filament/admin/theme.css')
             ->login()
             ->registration(false)
             ->passwordReset()
