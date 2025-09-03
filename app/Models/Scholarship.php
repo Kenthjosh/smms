@@ -14,19 +14,16 @@ class Scholarship extends Model
         'name',
         'slug',
         'description',
-        'form_schema',
-        'table_config',
-        'infolist_config',
-        'theme_config',
+        'type',
+        'settings',
         'is_active',
+        'application_deadline',
     ];
 
     protected $casts = [
-        'form_schema' => 'array',
-        'table_config' => 'array',
-        'infolist_config' => 'array',
-        'theme_config' => 'array',
+        'settings' => 'array',  // This tells Laravel to automatically convert between JSON and PHP array
         'is_active' => 'boolean',
+        'application_deadline' => 'date',
     ];
 
     public function users(): HasMany
@@ -47,5 +44,25 @@ class Scholarship extends Model
     public function students(): HasMany
     {
         return $this->hasMany(User::class)->where('role', 'student');
+    }
+
+    // Helper method to check if scholarship accepts applications
+    public function isAcceptingApplications(): bool
+    {
+        return $this->is_active &&
+            $this->application_deadline &&
+            $this->application_deadline->isFuture();
+    }
+
+    // Helper to get required documents
+    public function getRequiredDocuments(): array
+    {
+        return $this->settings['required_documents'] ?? [];
+    }
+
+    // Helper to get scholarship requirements
+    public function getRequirements(): array
+    {
+        return $this->settings['requirements'] ?? [];
     }
 }

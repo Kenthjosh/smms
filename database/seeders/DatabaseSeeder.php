@@ -16,10 +16,26 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        User::factory()->create([
-            'name' => 'Admin',
-            'email' => 'admin@example.com',
-            'password' => Hash::make('password'),
+        // SUPER ADMIN - NO SCHOLARSHIP AFFILIATION
+        User::firstOrCreate([
+            'email' => 'superadmin@daanbantayan.gov.ph'
+        ], [
+            'name' => 'Municipal Administrator',
+            'password' => Hash::make('superadmin123'),
+            'role' => 'admin',
+            'scholarship_id' => null, // Super admin is not linked to any specific scholarship
+            'profile_data' => json_encode([
+                'position' => 'Municipal Administrator',
+                'department' => 'Office of the Municipal Mayor',
+                'contact_number' => '+63 999 000 0000',
+                'employee_id' => 'MA-2024-001',
+                'access_level' => 'super_admin'
+            ])
+        ]);
+
+        $this->call([
+            ScholarshipSeeder::class,
+            UserSeeder::class,
         ]);
     }
 }
