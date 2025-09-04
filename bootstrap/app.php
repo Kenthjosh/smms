@@ -16,6 +16,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'scholarship.scopes' => \App\Http\Middleware\ApplyScholarshipScopes::class,
             'committee.role' => \App\Http\Middleware\EnsureCommitteeRole::class,
             'student.role' => \App\Http\Middleware\EnsureStudentRole::class,
+            'admin.role' => \App\Http\Middleware\EnsureAdminRole::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

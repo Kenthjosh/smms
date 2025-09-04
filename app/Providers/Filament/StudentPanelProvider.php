@@ -41,6 +41,7 @@ class StudentPanelProvider extends PanelProvider
             ->widgets([
                 AccountWidget::class,
                 FilamentInfoWidget::class,
+                \App\Filament\Student\Widgets\StudentStatsWidget::class,
             ])
             ->middleware([
                 EncryptCookies::class,

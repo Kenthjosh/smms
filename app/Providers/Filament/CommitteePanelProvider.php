@@ -41,6 +41,7 @@ class CommitteePanelProvider extends PanelProvider
             ->widgets([
                 AccountWidget::class,
                 FilamentInfoWidget::class,
+                \App\Filament\Committee\Widgets\CommitteeStatsWidget::class,
             ])
             ->middleware([
                 EncryptCookies::class,
