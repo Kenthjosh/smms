@@ -18,7 +18,7 @@ class ApplicationResource extends Resource
 {
     protected static ?string $model = Application::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = 'mdi-application-import';
 
     public static function form(Schema $schema): Schema
     {
