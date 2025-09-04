@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Scholarship;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -32,6 +33,17 @@ class DatabaseSeeder extends Seeder
                 'access_level' => 'super_admin'
             ])
         ]);
+
+        // Create 2-3 additional students per scholarship for draft/rejected applications
+        $scholarships = Scholarship::all();
+
+        foreach ($scholarships as $scholarship) {
+            // Create 3 more students per scholarship
+            User::factory()
+                ->count(50)
+                ->student($scholarship->id)
+                ->create();
+        }
 
         $this->call([
             ScholarshipSeeder::class,
