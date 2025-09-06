@@ -5,6 +5,7 @@ namespace App\Providers\Filament;
 use App\Filament\Pages\Auth\EditProfile;
 use App\Http\Middleware\EnsureAdminRole;
 use App\Http\Middleware\ApplyScholarshipScopes;
+use Filafly\Themes\Brisk\BriskTheme;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -38,7 +39,7 @@ class AdminPanelProvider extends PanelProvider
                 'danger' => Color::Red,
                 'gray' => Color::Slate,
                 'info' => Color::Blue,
-                'primary' => Color::Orange,
+                'primary' => Color::Purple,
                 'success' => Color::Green,
                 'warning' => Color::Amber
             ])
@@ -75,7 +76,8 @@ class AdminPanelProvider extends PanelProvider
                 SpotlightPlugin::make(),
                 FilamentAuthenticationLogPlugin::make()
                     ->panelName('admin'),
-                FilamentApexChartsPlugin::make()
+                FilamentApexChartsPlugin::make(),
+                BriskTheme::make()
             ])
             ->viteTheme('resources/css/filament/admin/theme.css')
             ->login()
