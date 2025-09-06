@@ -5,10 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Scholarship extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $fillable = [
         'name',
@@ -18,12 +19,16 @@ class Scholarship extends Model
         'settings',
         'is_active',
         'application_deadline',
+        'start_date',
+        'end_date',
     ];
 
     protected $casts = [
         'settings' => 'array',  // This tells Laravel to automatically convert between JSON and PHP array
         'is_active' => 'boolean',
         'application_deadline' => 'date',
+        'start_date' => 'date',
+        'end_date' => 'date',
     ];
 
     public function users(): HasMany
