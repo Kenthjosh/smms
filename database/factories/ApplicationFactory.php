@@ -24,6 +24,7 @@ class ApplicationFactory extends Factory
             'application_data' => $this->generateBasicApplicationData(),
             'status' => fake()->randomElement(['draft', 'submitted', 'under_review', 'approved', 'rejected']),
             'committee_notes' => null,
+            'score' => fake()->optional()->randomFloat(2, 60, 99),
             'submitted_at' => null,
             'reviewed_at' => null,
             'reviewed_by' => null,

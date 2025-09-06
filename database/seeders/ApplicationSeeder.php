@@ -129,6 +129,7 @@ class ApplicationSeeder extends Seeder
             'application_data' => json_encode($applicationData),
             'status' => $status,
             'committee_notes' => $this->generateCommitteeNotes($status),
+            'score' => in_array($status, ['approved', 'rejected', 'under_review']) ? fake()->randomFloat(2, 65, 99) : null,
             'submitted_at' => $dates['submitted_at'],
             'reviewed_at' => $dates['reviewed_at'],
             'reviewed_by' => $reviewer?->id,

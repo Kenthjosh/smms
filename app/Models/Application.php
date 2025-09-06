@@ -6,25 +6,29 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Application extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $fillable = [
         'scholarship_id',
         'user_id',
-        'form_data',
+        'application_data',
         'status',
-        'notes',
+        'committee_notes',
         'submitted_at',
         'reviewed_at',
+        'reviewed_by',
+        'score',
     ];
 
     protected $casts = [
-        'form_data' => 'array',
+        'application_data' => 'array',
         'submitted_at' => 'datetime',
         'reviewed_at' => 'datetime',
+        'score' => 'decimal:2',
     ];
 
     public function scholarship(): BelongsTo
