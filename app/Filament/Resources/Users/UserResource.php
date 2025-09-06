@@ -21,11 +21,21 @@ class UserResource extends Resource
 {
     protected static ?string $model = User::class;
 
-    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-user';
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedUser;
 
     public static function getNavigationBadge(): ?string
     {
-        return null;
+        return (string) User::count();
+    }
+
+    public static function getNavigationBadgeColor(): ?string
+    {
+        return 'info';
+    }
+
+    public static function getNavigationBadgeTooltip(): ?string
+    {
+        return 'Total users';
     }
 
     public static function getNavigationGroup(): ?string
