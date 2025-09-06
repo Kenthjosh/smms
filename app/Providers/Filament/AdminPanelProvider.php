@@ -23,6 +23,7 @@ use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use pxlrbt\FilamentSpotlight\SpotlightPlugin;
 use Tapp\FilamentAuthenticationLog\FilamentAuthenticationLogPlugin;
+use Leandrocfe\FilamentApexCharts\FilamentApexChartsPlugin;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -73,7 +74,8 @@ class AdminPanelProvider extends PanelProvider
             ->plugins([
                 SpotlightPlugin::make(),
                 FilamentAuthenticationLogPlugin::make()
-                    ->panelName('admin')
+                    ->panelName('admin'),
+                FilamentApexChartsPlugin::make()
             ])
             ->viteTheme('resources/css/filament/admin/theme.css')
             ->login()

@@ -3,13 +3,13 @@
 namespace App\Filament\Resources\Users\Widgets;
 
 use App\Models\User;
-use Filament\Widgets\ChartWidget;
+use Leandrocfe\FilamentApexCharts\Widgets\ApexChartWidget;
 
-class UserRegistrationsTrend extends ChartWidget
+class UserRegistrationsTrend extends ApexChartWidget
 {
-    protected ?string $heading = 'Registrations (last 30 days)';
+    protected static ?string $heading = 'Registrations (last 30 days)';
 
-    protected function getData(): array
+    protected function getOptions(): array
     {
         $raw = User::selectRaw('DATE(created_at) as d, COUNT(*) as c')
             ->where('created_at', '>=', now()->subDays(30))
@@ -28,20 +28,24 @@ class UserRegistrationsTrend extends ChartWidget
         }
 
         return [
-            'datasets' => [[
-                'label' => 'New Users',
+            'chart' => ['type' => 'line', 'height' => 300, 'toolbar' => ['show' => false]],
+            'series' => [[
+                'name' => 'New Users',
                 'data' => $counts,
-                'borderColor' => '#3B82F6',
-                'backgroundColor' => 'rgba(59,130,246,0.15)',
-                'fill' => true,
-                'tension' => 0.35,
             ]],
-            'labels' => $labels,
+            'xaxis' => [
+                'categories' => $labels,
+                'tickPlacement' => 'on',
+                'labels' => [
+                    'rotate' => -35,
+                    'trim' => true,
+                    'hideOverlappingLabels' => true,
+                    'showDuplicates' => false,
+                ],
+            ],
+            'dataLabels' => ['enabled' => false],
+            'stroke' => ['curve' => 'smooth'],
+            'colors' => ['#3B82F6'],
         ];
-    }
-
-    protected function getType(): string
-    {
-        return 'line';
     }
 }

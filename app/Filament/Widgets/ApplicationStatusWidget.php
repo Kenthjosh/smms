@@ -2,12 +2,12 @@
 
 namespace App\Filament\Admin\Widgets;
 
-use Filament\Widgets\ChartWidget;
 use App\Models\Application;
+use Leandrocfe\FilamentApexCharts\Widgets\ApexChartWidget;
 
-class ApplicationStatusWidget extends ChartWidget
+class ApplicationStatusWidget extends ApexChartWidget
 {
-    protected ?string $heading = 'Application Status Distribution';
+    protected static ?string $heading = 'Application Status Distribution';
     // protected static ?int $sort = 3;
 
     public function getDescription(): ?string
@@ -15,7 +15,7 @@ class ApplicationStatusWidget extends ChartWidget
         return 'Overview of application statuses across all scholarships';
     }
 
-    protected function getData(): array
+    protected function getOptions(): array
     {
         // Get status counts
         $statuses = Application::selectRaw('status, count(*) as count')
@@ -33,44 +33,17 @@ class ApplicationStatusWidget extends ChartWidget
         ];
 
         return [
-            'datasets' => [
-                [
-                    'label' => 'Applications',
-                    'data' => array_values($allStatuses),
-                    'backgroundColor' => [
-                        '#6B7280', // Draft - Gray
-                        '#3B82F6', // Submitted - Blue
-                        '#F59E0B', // Under Review - Yellow/Orange
-                        '#10B981', // Approved - Green
-                        '#EF4444', // Rejected - Red
-                    ],
-                    'borderWidth' => 0,
+            'chart' => ['type' => 'donut', 'height' => 300],
+            'labels' => ['Draft', 'Submitted', 'Under Review', 'Approved', 'Rejected'],
+            'series' => array_values($allStatuses),
+            'colors' => ['#6B7280', '#3B82F6', '#F59E0B', '#10B981', '#EF4444'],
+            'legend' => ['position' => 'bottom'],
+            'stroke' => ['width' => 0], // remove white borders
+            'plotOptions' => [
+                'pie' => [
+                    'donut' => ['size' => '65%'],
                 ],
             ],
-            'labels' => [
-                'Draft',
-                'Submitted',
-                'Under Review',
-                'Approved',
-                'Rejected'
-            ],
-        ];
-    }
-
-    protected function getType(): string
-    {
-        return 'doughnut';
-    }
-
-    protected function getOptions(): array
-    {
-        return [
-            'plugins' => [
-                'legend' => [
-                    'position' => 'bottom',
-                ],
-            ],
-            'maintainAspectRatio' => false,
         ];
     }
 }
