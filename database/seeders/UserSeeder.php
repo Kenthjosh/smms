@@ -48,6 +48,8 @@ class UserSeeder extends Seeder
                 'password' => Hash::make('committee123'),
                 'role' => 'committee',
                 'scholarship_id' => $scholarship->id,
+                'contact_number' => '+63 9' . fake()->numberBetween(100000000, 999999999),
+                'address' => fake()->address() . ', Daanbantayan, Cebu',
                 'profile_data' => json_encode($this->getCommitteeProfile($scholarship, 'chair'))
             ]);
 
@@ -60,6 +62,8 @@ class UserSeeder extends Seeder
                     'password' => Hash::make('committee123'),
                     'role' => 'committee',
                     'scholarship_id' => $scholarship->id,
+                    'contact_number' => '+63 9' . fake()->numberBetween(100000000, 999999999),
+                    'address' => fake()->address() . ', Daanbantayan, Cebu',
                     'profile_data' => json_encode($this->getCommitteeProfile($scholarship, 'member'))
                 ]);
             }
@@ -79,7 +83,10 @@ class UserSeeder extends Seeder
         foreach ($sampleStudents as $studentData) {
             User::firstOrCreate([
                 'email' => $studentData['email']
-            ], $studentData);
+            ], array_merge($studentData, [
+                'contact_number' => $studentData['profile_data']['contact_number'] ?? ('+63 9' . fake()->numberBetween(100000000, 999999999)),
+                'address' => $studentData['profile_data']['address'] ?? fake()->address() . ', Daanbantayan, Cebu',
+            ]));
         }
 
         $this->command->info("   🎓 Created " . count($sampleStudents) . " sample students");

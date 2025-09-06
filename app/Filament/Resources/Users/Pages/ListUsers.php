@@ -3,8 +3,13 @@
 namespace App\Filament\Resources\Users\Pages;
 
 use App\Filament\Resources\Users\UserResource;
+use App\Filament\Widgets\UserRegistrationsTrend;
+use App\Filament\Widgets\UserRoleDistribution;
+use App\Filament\Widgets\UserStatsOverview;
 use Filament\Actions\CreateAction;
+use Filament\Actions\Action;
 use Filament\Resources\Pages\ListRecords;
+use Illuminate\Support\Facades\Auth;
 
 class ListUsers extends ListRecords
 {
@@ -14,6 +19,20 @@ class ListUsers extends ListRecords
     {
         return [
             CreateAction::make(),
+            Action::make('deletedUsers')
+                ->label('Deleted Users')
+                ->url(UserResource::getUrl('deleted'))
+                ->color('gray')
+                ->visible(fn() => Auth::user()?->isSuperAdmin()),
+        ];
+    }
+
+    protected function getHeaderWidgets(): array
+    {
+        return [
+            UserStatsOverview::class,
+            UserRoleDistribution::class,
+            UserRegistrationsTrend::class,
         ];
     }
 }

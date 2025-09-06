@@ -8,10 +8,12 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Rappasoft\LaravelAuthenticationLog\Traits\AuthenticationLoggable;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, AuthenticationLoggable, SoftDeletes;
 
     protected $fillable = [
         'name',
@@ -20,6 +22,9 @@ class User extends Authenticatable
         'scholarship_id',    // Added for scholarship relationship
         'role',             // Added for role-based access
         'profile_data',     // Added for flexible profile storage
+        'contact_number',
+        'address',
+        'email_verified_at',
     ];
 
     protected $hidden = [
@@ -88,6 +93,10 @@ class User extends Authenticatable
     // Get user's contact number from profile data
     public function getContactNumberAttribute(): ?string
     {
+        if (!is_null($this->attributes['contact_number'] ?? null)) {
+            return $this->attributes['contact_number'];
+        }
+
         return $this->profile_data['contact_number'] ?? null;
     }
 }

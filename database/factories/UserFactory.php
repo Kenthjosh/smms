@@ -32,9 +32,9 @@ class UserFactory extends Factory
             'remember_token' => Str::random(10),
             'role' => 'student', // Default role
             'scholarship_id' => null, // Will be set by states
+            'contact_number' => '+63 9' . fake()->numberBetween(100000000, 999999999),
+            'address' => fake()->address() . ', Daanbantayan, Cebu',
             'profile_data' => json_encode([
-                'contact_number' => '+63 9' . fake()->numberBetween(100000000, 999999999),
-                'address' => fake()->address() . ', Daanbantayan, Cebu',
                 'date_of_birth' => fake()->dateTimeBetween('-25 years', '-18 years')->format('Y-m-d'),
             ]),
         ];
@@ -82,8 +82,6 @@ class UserFactory extends Factory
                 'course' => $this->getRandomCourse($scholarship->slug),
                 'year_level' => fake()->randomElement(['1st Year', '2nd Year', '3rd Year', '4th Year']),
                 'gpa' => $this->generateRealisticGPA($scholarship->slug),
-                'contact_number' => '+63 9' . fake()->numberBetween(100000000, 999999999),
-                'address' => fake()->address() . ', Daanbantayan, Cebu',
                 'parent_guardian' => 'Mr. ' . fake()->name('male') . ' & Mrs. ' . fake()->name('female'),
                 'parent_contact' => '+63 9' . fake()->numberBetween(100000000, 999999999),
                 'scholarship_program' => $scholarship->name
@@ -98,6 +96,8 @@ class UserFactory extends Factory
                 'email' => strtolower(str_replace([' ', '.'], ['', ''], $fullName)) . '@student.daanbantayan.edu.ph',
                 'role' => 'student',
                 'scholarship_id' => $scholarship->id,
+                'contact_number' => '+63 9' . fake()->numberBetween(100000000, 999999999),
+                'address' => fake()->address() . ', Daanbantayan, Cebu',
                 'profile_data' => json_encode($profileData),
             ];
         });
@@ -126,10 +126,11 @@ class UserFactory extends Factory
                 'password' => Hash::make('committee123'),
                 'role' => 'committee',
                 'scholarship_id' => $scholarshipId,
+                'contact_number' => '+63 9' . fake()->numberBetween(100000000, 999999999),
+                'address' => fake()->address() . ', Daanbantayan, Cebu',
                 'profile_data' => json_encode([
                     'position' => 'Committee Member - ' . $scholarship->name,
                     'department' => $this->getDepartmentByScholarship($scholarship->slug),
-                    'contact_number' => '+63 9' . fake()->numberBetween(100000000, 999999999),
                     'employee_id' => strtoupper(substr($scholarship->slug, 0, 3)) . '-2024-' . fake()->randomNumber(3, true),
                     'expertise' => $this->getExpertiseByScholarship($scholarship->slug),
                     'education' => $this->getEducationByScholarship($scholarship->slug),
@@ -153,11 +154,12 @@ class UserFactory extends Factory
                 'password' => Hash::make('admin123'),
                 'role' => 'admin',
                 'scholarship_id' => null, // Admin has no scholarship affiliation
+                'contact_number' => '+63 9' . fake()->numberBetween(100000000, 999999999),
+                'address' => fake()->address() . ', Daanbantayan, Cebu',
                 'profile_data' => json_encode([
                     'position' => 'System Administrator',
                     'department' => 'Municipal IT Office',
                     'employee_id' => 'ADMIN-2024-' . fake()->randomNumber(3, true),
-                    'contact_number' => '+63 9' . fake()->numberBetween(100000000, 999999999),
                     'access_level' => 'full_system_access',
                     'responsibilities' => [
                         'System maintenance',

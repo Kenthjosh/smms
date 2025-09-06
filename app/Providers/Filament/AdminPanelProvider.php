@@ -22,6 +22,7 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use pxlrbt\FilamentSpotlight\SpotlightPlugin;
+use Tapp\FilamentAuthenticationLog\FilamentAuthenticationLogPlugin;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -72,6 +73,8 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->plugins([
                 SpotlightPlugin::make(),
+                FilamentAuthenticationLogPlugin::make()
+                    ->panelName('admin')
             ])
             ->viteTheme('resources/css/filament/admin/theme.css')
             ->login()
