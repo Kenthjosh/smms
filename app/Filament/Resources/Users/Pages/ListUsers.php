@@ -3,9 +3,9 @@
 namespace App\Filament\Resources\Users\Pages;
 
 use App\Filament\Resources\Users\UserResource;
-use App\Filament\Widgets\UserRegistrationsTrend;
-use App\Filament\Widgets\UserRoleDistribution;
-use App\Filament\Widgets\UserStatsOverview;
+use App\Filament\Resources\Users\Widgets\UserRegistrationsTrend;
+use App\Filament\Resources\Users\Widgets\UserRoleDistribution;
+use App\Filament\Resources\Users\Widgets\UserStatsOverview;
 use Filament\Actions\CreateAction;
 use Filament\Actions\Action;
 use Filament\Resources\Pages\ListRecords;
@@ -31,8 +31,8 @@ class ListUsers extends ListRecords
     {
         return [
             UserStatsOverview::class,
-            UserRoleDistribution::class,
             UserRegistrationsTrend::class,
+            UserRoleDistribution::class,
         ];
     }
 }

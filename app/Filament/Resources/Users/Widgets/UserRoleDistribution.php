@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Widgets;
+namespace App\Filament\Resources\Users\Widgets;
 
 use App\Models\User;
 use Filament\Widgets\ChartWidget;
@@ -23,7 +23,7 @@ class UserRoleDistribution extends ChartWidget
                 ],
                 'backgroundColor' => ['#EF4444', '#F59E0B', '#10B981'],
                 'borderWidth' => 0,
-                'cutout' => '70%',
+                'cutout' => '55%',
             ]],
             'labels' => ['Admins', 'Committee', 'Students'],
         ];

@@ -32,7 +32,6 @@ class AdminPanelProvider extends PanelProvider
             ->default()
             ->id('admin')
             ->path('admin')
-            ->login()
             ->profile(EditProfile::class)
             ->colors([
                 'danger' => Color::Red,
